@@ -1,9 +1,14 @@
 # Social Media App
 
 - [Social Media App](#social-media-app)
+  - [Running locally](#running-locally)
   - [Microservices](#microservices)
     - [Posts Microservice](#posts-microservice)
     - [Comments Microservice](#comments-microservice)
+
+## Running locally
+1. Make sure you are in root of the project
+2. Execute `npm run dev`
 
 ## Microservices
 

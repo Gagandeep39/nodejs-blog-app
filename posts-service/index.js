@@ -7,11 +7,14 @@
  */
 const express = require('express');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 const app = express();
 const { randomBytes } = require('crypto');
 const posts = {};
 
 app.use(bodyParser.json());
+app.use(morgan('dev'));
+
 app.get('/posts', (req, res) => res.send(posts));
 app.post('/posts', (req, res) => {
   const id = randomBytes(4).toString('hex');

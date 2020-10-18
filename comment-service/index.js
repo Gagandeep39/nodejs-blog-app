@@ -6,9 +6,11 @@
  * @desc Starting point of Comments microservice
  */
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const posts = {};
 
+app.use(bodyParser.json());
 app.get('/comments', (req, res) => res.send(posts));
 app.post('/comments', (req, res) =>
   res.status(201).send('Comment created Successfully')

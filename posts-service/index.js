@@ -6,10 +6,12 @@
  * @desc Starting point of Posts microservice
  */
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const { randomBytes } = require('crypto');
 const posts = {};
 
+app.use(bodyParser.json());
 app.get('/posts', (req, res) => res.send(posts));
 app.post('/posts', (req, res) => {
   const id = randomBytes(4).toString('hex');

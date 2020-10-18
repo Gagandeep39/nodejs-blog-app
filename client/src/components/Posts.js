@@ -36,7 +36,7 @@ export default function Posts() {
     >
       <div className='card-body'>
         <h3> {post.title} </h3>
-        <CreateComment postId={posts.id} />
+        <CreateComment postId={post.id} />
       </div>
     </div>
   ));

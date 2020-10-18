@@ -16,7 +16,7 @@ export default function CreatePost() {
   const onSubmit = async (event) => {
     event.preventDefault();
     axios
-      .post(url + postService, title)
+      .post(url + postService, {title})
       .then((response) => {
         console.log(response);
         setTitle('');

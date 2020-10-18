@@ -23,5 +23,11 @@
 
 - Create Comments
 - Fetch All Comments
+- Routes
+
+| Path                  | Method | Body                | Goal                                               |
+| --------------------- | ------ | ------------------- | -------------------------------------------------- |
+| `/posts/:id/comments` | POST   | `{content: String}` | Create comment associated with a post ID           |
+| `/posts/:id/comments` | GET    | `-`                 | Retrieve All comments associated with a comment ID |
 
 

@@ -1,0 +1,10 @@
+### Create a new Post
+POST http://localhost:4000/posts
+Content-Type: application/json
+
+{
+  "title": "Gagandeep Singh"
+}
+
+### Fetch all posts
+GET http://localhost:4000/posts

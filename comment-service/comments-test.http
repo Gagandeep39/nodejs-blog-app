@@ -1,0 +1,10 @@
+### Create a new Comment
+POST http://localhost:5000/posts/b0a742d4/comments
+Content-Type: application/json
+
+{
+  "content": "Awesome"
+}
+
+### Fetch Comments for ID
+GET http://localhost:5000/posts/b0a742d4/comments

@@ -7,14 +7,25 @@
  */
 const express = require('express');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 const app = express();
-const posts = {};
+const { randomBytes } = require('crypto');
+const commentsByPostId = {};
 
 app.use(bodyParser.json());
-app.get('/comments', (req, res) => res.send(posts));
-app.post('/comments', (req, res) =>
-  res.status(201).send('Comment created Successfully')
+app.use(morgan('dev'));
+
+app.get('/posts/:id/comments', (req, res) =>
+  res.send(commentsByPostId[req.params.id])
 );
+app.post('/posts/:id/comments', (req, res) => {
+  const commentId = randomBytes(4).toString('hex');
+  const { content } = req.body;
+  const comments = commentsByPostId[req.params.id] || [];
+  comments.push({ id: commentId, content });
+  commentsByPostId[req.params.id] = comments;
+  res.status(201).send(comments);
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Comments Service started on port ${PORT}`));

@@ -4,7 +4,11 @@
   "description": "A social media app to demonstrate kubernetes deployment",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "posts-service": "nodemon posts-service/index",
+    "comments-service": "nodemon comment-service/index",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run posts-service\" \"npm run comments-service\" \"npm run client\""
   },
   "author": "Gagandeep Singh",
   "license": "MIT",

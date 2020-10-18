@@ -7,13 +7,14 @@
  */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import CreateComment from './CreateComment';
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
   const url = process.env.REACT_APP_URL;
   const postService = process.env.REACT_APP_POST_SERVICE;
 
-  const fetchPosts = async () => {
+  const fetchPosts = () => {
     axios
       .get(url + postService)
       .then((response) => {
@@ -31,10 +32,11 @@ export default function Posts() {
     <div
       className='card'
       key={post.id}
-      style={{ width: `30%`, marginBottom: `20px` }}
+      style={{ width: '30%', marginBottom: '20px' }}
     >
       <div className='card-body'>
         <h3> {post.title} </h3>
+        <CreateComment postId={posts.id} />
       </div>
     </div>
   ));

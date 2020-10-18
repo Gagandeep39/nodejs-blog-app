@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CreateComment from './CreateComment';
+import Comments from './Comments';
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -36,10 +37,11 @@ export default function Posts() {
     >
       <div className='card-body'>
         <h3> {post.title} </h3>
+        <Comments postId={post.id} />
         <CreateComment postId={post.id} />
       </div>
     </div>
   ));
 
-  return <div>{renderedPosts}</div>;
+  return <div className='d-flex flex-row flex-wrap justify-content-between'>{renderedPosts}</div>;
 }

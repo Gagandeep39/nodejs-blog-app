@@ -20,4 +20,7 @@ app.get('/posts', queryService.fetchPostsAndComments);
 app.post('/events', queryService.recieveEvents);
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(`Query Service started on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Query Service started on port ${PORT}`);
+  queryService.processPreviousEvents();
+});

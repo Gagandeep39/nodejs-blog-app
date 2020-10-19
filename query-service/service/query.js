@@ -5,6 +5,7 @@
  * @modify date 2020-10-19 11:45:38
  * @desc Manage Queries
  */
+const axios = require('axios');
 const posts = {};
 
 /**
@@ -18,6 +19,11 @@ exports.fetchPostsAndComments = (req, res) => res.send(posts);
  */
 exports.recieveEvents = (req, res) => {
   const { type, data } = req.body;
+  handleEvent(type, data);
+  res.send({ status: 'OK' });
+};
+
+const handleEvent = (type, data) => {
   switch (type) {
     case 'PostCreated':
       const { id, title } = data;
@@ -39,5 +45,17 @@ exports.recieveEvents = (req, res) => {
       oldComment.status = updatedStatus;
       break;
   }
-  res.send({ status: 'OK' });
+};
+
+exports.processPreviousEvents = () => {
+  console.log('Processing previous events');
+  axios
+    .get('http://localhost:7000/events')
+    .then((response) => {
+      response.data.forEach((event) => {
+        console.log(event.type);
+        handleEvent(event.type, event.data);
+      });
+    })
+    .catch((error) => console.log(error));
 };

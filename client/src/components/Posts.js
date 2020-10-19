@@ -12,12 +12,12 @@ import Comments from './Comments';
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
-  const url = process.env.REACT_APP_URL;
-  const postService = process.env.REACT_APP_POST_SERVICE;
+  const host = process.env.REACT_APP_HOSTNAME;
+  const postServicePort = process.env.REACT_APP_POST_SERVICE;
 
   const fetchPosts = () => {
     axios
-      .get(url + postService)
+      .get(`${host}:${postServicePort}/posts`)
       .then((response) => {
         console.log(response.data);
         setPosts(response.data);

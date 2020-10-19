@@ -10,13 +10,13 @@ import axios from 'axios';
 
 export default function CreateComment({ postId }) {
   const [content, setContent] = useState('');
-  const url = process.env.REACT_APP_URL;
-  const commentService = process.env.REACT_APP_COMMENT_SERVICE;
+  const host = process.env.REACT_APP_HOSTNAME;
+  const commentServicePort = process.env.REACT_APP_COMMENT_SERVICE;
 
   const onSubmit = (event) => {
     event.preventDefault();
     axios
-      .post(url + commentService + `/${postId}/comments`, { content })
+      .post(`${host}:${commentServicePort}/posts/${postId}/comments`, { content })
       .then((response) => setContent(''))
       .catch((error) => console.log(error));
   };

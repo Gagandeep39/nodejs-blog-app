@@ -10,12 +10,12 @@ import axios from 'axios';
 
 export default function Comments({ postId }) {
   const [comments, setComments] = useState([]);
-  const url = process.env.REACT_APP_URL;
-  const commentService = process.env.REACT_APP_COMMENT_SERVICE;
+  const host = process.env.REACT_APP_HOSTNAME;
+  const commentServicePort = process.env.REACT_APP_COMMENT_SERVICE;
 
   const fetchComments = () => {
     axios
-      .get(`${url}${commentService}/${postId}/comments`)
+      .get(`${host}:${commentServicePort}/posts/${postId}/comments`)
       .then((response) => setComments(response.data))
       .catch((error) => console.log(error));
   };

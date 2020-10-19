@@ -10,13 +10,13 @@ import axios from 'axios';
 
 export default function CreatePost() {
   const [title, setTitle] = useState('');
-  const url = process.env.REACT_APP_URL;
-  const postService = process.env.REACT_APP_POST_SERVICE;
+  const host = process.env.REACT_APP_HOSTNAME;
+  const postServicePort = process.env.REACT_APP_POST_SERVICE;
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     axios
-      .post(url + postService, {title})
+      .post(`${host}:${postServicePort}/posts`, { title })
       .then((response) => {
         console.log(response);
         setTitle('');

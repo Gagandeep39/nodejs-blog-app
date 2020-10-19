@@ -13,13 +13,12 @@ import Comments from './Comments';
 export default function Posts() {
   const [posts, setPosts] = useState([]);
   const host = process.env.REACT_APP_HOSTNAME;
-  const postServicePort = process.env.REACT_APP_POST_SERVICE;
+  const postServicePort = process.env.REACT_APP_QUERY_SERVICE;
 
   const fetchPosts = () => {
     axios
       .get(`${host}:${postServicePort}/posts`)
       .then((response) => {
-        console.log(response.data);
         setPosts(response.data);
       })
       .catch((error) => console.log(error));
@@ -37,7 +36,7 @@ export default function Posts() {
     >
       <div className='card-body'>
         <h3> {post.title} </h3>
-        <Comments postId={post.id} />
+        <Comments comments={post.comments} />
         <CreateComment postId={post.id} />
       </div>
     </div>

@@ -1,0 +1,39 @@
+name: Posts service deployment
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'posts-service/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set env
+        run: echo "::set-env name=NOW::v$(date +'%Y%m%d.%H%M%S')"
+        # Required for Build and push step
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        # Required for Build and push step
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        # Required for Build and push step
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64,linux/386
+          push: true
+          tags: |
+            gagandeep39/blog-posts-service:${{env.NOW}}
+            gagandeep39/blog-posts-service:latest

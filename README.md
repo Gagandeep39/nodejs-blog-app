@@ -10,6 +10,7 @@
   - [Query service](#query-service)
   - [Event bus in this application](#event-bus-in-this-application)
   - [Moderation Service](#moderation-service)
+  - [Handling Missing event](#handling-missing-event)
 
 ## Running locally
 1. Make sure you are in root of the project
@@ -93,3 +94,18 @@
   7. Event `CommentModerated` published
   8. Event recieved by comment-service, when will then be updated in database (Not query service because query-service is only for presenting data. All operation related to data manipulation must be managed by other services)
   9. Event will be published which will then be handled by query service
+
+## Handling Missing event
+
+- Usecase - In this application, if moderation service goes down for sometime, then all comments created in that particular time will be in pending state and will never get moderated even if the service comes online later on
+- Possible solutions
+  1. Make a request to comments servie and ecth all comments - Not feasible as the data will be too large in real orld scenario
+  2. Give direct access to database - Unnecessary repetiotion of code(Same code of comment service will be writen here also )
+  3. Event bus stores all recieved events in data store and make the query service fetch data from event data store - Feasible approach
+
+- Steps
+1. Create an array in event bus
+2. Push all events in events array
+3. Create an endpoint tha fetches all events that are stored in this bus
+4. Access the endpoint from query service and handle events
+  

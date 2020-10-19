@@ -8,9 +8,15 @@
 import React from 'react';
 
 export default function Comments({ comments }) {
-  const renderedComments = Object.values(comments).map((comment) => (
-    <li key={comment.id}> {comment.content} </li>
-  ));
+  const renderedComments = Object.values(comments).map((comment) => {
+    let content;
+    if (comment.status === 'rejected')
+      content = 'This comment has been rejected';
+    else if (comment.status === 'pending')
+      content = 'This comment is awaiting moderation';
+    else content = comment.content;
+    return <li key={comment.id}> {content} </li>;
+  });
 
   return <ul> {renderedComments} </ul>;
 }

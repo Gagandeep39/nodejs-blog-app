@@ -9,8 +9,9 @@
     "comments-service": "nodemon comment-service/index",
     "query-service": "nodemon query-service/index",
     "event-bus": "nodemon event-bus/index",
+    "moderation-service": "nodemon moderation-service/index",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run posts-service\" \"npm run comments-service\" \"npm run event-bus\"  \"npm run client\" \"npm run query-service\""
+    "dev": "concurrently \"npm run posts-service\" \"npm run comments-service\" \"npm run event-bus\"  \"npm run client\" \"npm run query-service\" \"npm run moderation-service\""
   },
   "author": "Gagandeep Singh",
   "license": "MIT",

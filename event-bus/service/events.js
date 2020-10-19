@@ -6,9 +6,11 @@
  * @desc Manage Events
  */
 const axios = require('axios');
+const events = [];
 
 exports.publishEvents = (req, res) => {
   const event = req.body;
+  events.push(event);
 
   // Send events to all services
   axios.post('http://localhost:4000/events', event);
@@ -18,3 +20,8 @@ exports.publishEvents = (req, res) => {
 
   res.send({ status: 'OK' });
 };
+
+/**
+ * Fetches all events 
+ */
+exports.fetchAllEvents = (req, res) => res.send(events);

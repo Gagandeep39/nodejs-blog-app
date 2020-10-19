@@ -14,6 +14,7 @@ const eventsService = require('./service/events');
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.post('/events', eventsService.publishEvents);
+app.get('/events', eventsService.fetchAllEvents);
 
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => console.log(`Event-bus started on port ${PORT}`));

@@ -7,9 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "posts-service": "nodemon posts-service/index",
     "comments-service": "nodemon comment-service/index",
+    "query-service": "nodemon query-service/index",
     "event-bus": "nodemon event-bus/index",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run posts-service\" \"npm run comments-service\" \"npm run event-bus\"  \"npm run client\""
+    "dev": "concurrently \"npm run posts-service\" \"npm run comments-service\" \"npm run event-bus\"  \"npm run client\" \"npm run query-service\""
   },
   "author": "Gagandeep Singh",
   "license": "MIT",

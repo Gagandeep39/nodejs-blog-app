@@ -7,42 +7,18 @@
  */
 const express = require('express');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const morgan = require('morgan');
 const cors = require('cors');
+const commentsService = require('./service/comments');
 const app = express();
-const { randomBytes } = require('crypto');
-const commentsByPostId = {};
 
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-app.get('/posts/:id/comments', (req, res) =>
-  res.send(commentsByPostId[req.params.id])
-);
-app.post('/posts/:id/comments', (req, res) => {
-  const commentId = randomBytes(4).toString('hex');
-  const { content } = req.body;
-  const comments = commentsByPostId[req.params.id] || [];
-  comments.push({ id: commentId, content });
-  commentsByPostId[req.params.id] = comments;
-  // Send data to event bus
-  axios
-    .post('http://localhost:7000/events', {
-      type: 'CommentCreated',
-      data: {
-        id: commentId,
-        content,
-        postId: req.params.id,
-      },
-    })
-    .then(() => res.status(201).send(comments));
-});
-app.post('/events', (req, res) => {
-  console.log(req.body.type);
-  res.send({ status: 'OK' });
-});
+app.get('/posts/:id/comments', commentsService.fetchCommentsByPostId);
+app.post('/posts/:id/comments', commentsService.createComment);
+app.post('/events', commentsService.sendEvent);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Comments Service started on port ${PORT}`));

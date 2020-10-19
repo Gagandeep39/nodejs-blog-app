@@ -28,6 +28,16 @@ exports.recieveEvents = (req, res) => {
       const post = posts[postId];
       post.comments.push({ id: commentId, content, status });
       break;
+    case 'CommentUpdated':
+      const {
+        id: updatedId,
+        postId: updatedPostId,
+        status: updatedStatus,
+      } = data;
+      const oldPost = posts[updatedPostId];
+      const oldComment = oldPost.comments.find((c) => c.id === updatedId);
+      oldComment.status = updatedStatus;
+      break;
   }
   res.send({ status: 'OK' });
 };

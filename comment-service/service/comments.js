@@ -27,13 +27,31 @@ exports.createComment = (req, res) => {
         id: commentId,
         content,
         postId: req.params.id,
-        status: 'pending'
+        status: 'pending',
       },
     })
     .then(() => res.status(201).send(comments));
 };
 
 exports.sendEvent = (req, res) => {
-  console.log(req.body.type);
-  res.send({ status: 'OK' });
+  const { type, data } = req.body;
+  switch (type) {
+    case 'CommentModerated':
+      const { id, postId, status, content } = data;
+      const comments = commentsByPostId[postId];
+      const comment = comments.find((c) => c.id === id);
+      comment.status = status;
+      axios
+        .post('http://localhost:7000/events', {
+          type: 'CommentUpdated',
+          data: {
+            id,
+            status,
+            postId,
+            content,
+          },
+        })
+        .then(() => res.send({ status: 'OK' }));
+      break;
+  }
 };

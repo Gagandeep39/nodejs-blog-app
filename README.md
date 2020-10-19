@@ -20,7 +20,9 @@
   - [Customising Shell](#customising-shell)
   - [Keubernetes use cases](#keubernetes-use-cases)
     - [Method 1](#method-1)
-    - [Method 2](#method-2)
+    - [Method 2 (Preferred)](#method-2-preferred)
+  - [Services](#services)
+    - [Ports](#ports)
   - [NOTE](#note)
 
 ## Running locally
@@ -195,12 +197,31 @@
 3. In deployment file update version
 4. Run `kubectl apply -f <file-name>`
 
-### Method 2
+### Method 2 (Preferred)
 
 1. Deployment must use latest tage
 2. Update code
 3. Build and publish image to dockerhub
-4. Run `kubectl rollout restart deployment <depl-name>`
+4. Run `kubectl rollout restart deployment <depl-name>` (If doesnt work then add imagePullPolicy: Always or just WAIT for 5min)
+
+## Services
+
+- `ClusterIP` Proves a name to access a pod. Pod accessible inside cluser
+- `NodePort` Used for dev only, Exposes pod to real world
+- `Load Balancer` Makes pod accessbile from outide container
+- `External name` Redirects in-cluster request to outside (probably never used)
+
+### Ports
+
+```yml
+- port: 4000 # Node service port
+  name: posts-port
+  protocol: TCP
+  targetPort: 4000 # Port of pod we want to expose
+```
+- Flow 
+  - nodePort (Accessed via browser) -> port(Port assigned to node-service) -> targetPort (Application)
+  - Node pode reqests i redirected to service where service redirects to application
   
 ## NOTE
 - `docker run -it [img-id] sh` - Overides default command and **starts container**

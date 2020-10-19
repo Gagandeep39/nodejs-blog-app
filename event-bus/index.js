@@ -8,20 +8,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const axios = require('axios');
 const app = express();
+const eventsService = require('./service/events');
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.post('/events', (req, res) => {
-  const event = req.body;
-
-  axios.post('http://localhost:4000/events', event);
-  axios.post('http://localhost:5000/events', event);
-  // axios.post('http://localhost:6000/events', event);
-
-  res.send({ status: 'OK' });
-});
+app.post('/events', eventsService.publishEvents);
 
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => console.log(`Event-bus started on port ${PORT}`));

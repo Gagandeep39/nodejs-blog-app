@@ -13,6 +13,14 @@
   - [Moderation Service](#moderation-service)
   - [Handling Missing event](#handling-missing-event)
   - [Deployment](#deployment)
+  - [Kubernetes Flow](#kubernetes-flow)
+  - [Kubernetes Keywords](#kubernetes-keywords)
+  - [Kubernetes Config Files](#kubernetes-config-files)
+  - [Useful K8s commands](#useful-k8s-commands)
+  - [Customising Shell](#customising-shell)
+  - [Keubernetes use cases](#keubernetes-use-cases)
+    - [Method 1](#method-1)
+    - [Method 2](#method-2)
   - [NOTE](#note)
 
 ## Running locally
@@ -130,7 +138,71 @@
 - Using docker
   - We don't need to assume the hardware the application will run on, instead will specify the hard manually i nocker
   - No need to understand how application runs eg. `npm start`
+
+## Kubernetes Flow
+
+1. Create Docker image for microservice
+2. Create a confi file to specify how/what services to deploy
+
+## Kubernetes Keywords
+
+- Cluster - Collection of Nodes and a master to manage it
+- Node - VM to run containers
+- Pod - Smallest unit of k8s that encapsultes a docker container
+- Service - Used to access pods
+- Deployment - Monitor a set of pod, rest on crash etc.
+
+## Kubernetes Config Files
+
+- Tell K8s about varus services, deployments etc.
+- Written in YAML
+- Always stored with source code
+- K8s objects can be created in CLI (Must be avoided)
+
+## Useful K8s commands  
+
+- `kubectl apply -f .` Run all fines in present directory
+- `kubectl apply -f <filename.yml>` Run a specific file
+- `kubectl get all` Displays all K8s entities
+- `kubectl get pods` Displays a list of Pods
+- `kubectl logs <pod-name>` View execution logs
+- `kubectl delete pod <pod-name>` Delete a pod
+- `kubectl describe pod <pod-name>` Description of Pod
+- `kubectl exec -it <pod-name> <command>`
+  - Similar to `docker exec -it <container-name> bash`
+  - Access pod through commandline
+
+## Customising Shell
+
+- Use `zsh` to provide support for better commnds
+  - `kubectl` can be replaced with `k`
+  - Other such alias can be created
+- Steps to create alias
+  1. code ~/.zshrc
+  2. Create alias
+      - `alias dps="docker ps"`
+      - `alias kubectl="k"`
+      - `alias code="code-insiders"`
+
+## Keubernetes use cases
+
+### Method 1
+
+- Not ued because we hard code the version evrywhere (Requires changes again and again)
+- Steps
+1. Make code changes
+2. Rebuild image with new version
+3. In deployment file update version
+4. Run `kubectl apply -f <file-name>`
+
+### Method 2
+
+1. Deployment must use latest tage
+2. Update code
+3. Build and publish image to dockerhub
+4. Run `kubectl rollout restart deployment <depl-name>`
   
 ## NOTE
 - `docker run -it [img-id] sh` - Overides default command and **starts container**
 - `docker exec -it [img-id] sh` - Allows accessing a **running container**
+

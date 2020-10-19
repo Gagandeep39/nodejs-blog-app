@@ -8,6 +8,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const axios = require('axios');
 const cors = require('cors');
 const app = express();
 const { randomBytes } = require('crypto');
@@ -25,7 +26,20 @@ app.post('/posts', (req, res) => {
     id,
     title,
   };
-  res.status(201).send(posts[id]);
+  // Send data to event bus
+  axios
+    .post('http://localhost:7000/events', {
+      type: 'PostCreated',
+      data: {
+        id,
+        title,
+      },
+    })
+    .then(() => res.status(201).send(posts[id]));
+});
+app.post('/events', (req, res) => {
+  console.log(req.body.type);
+  res.send({ status: 'OK' });
 });
 
 const PORT = process.env.PORT || 4000;

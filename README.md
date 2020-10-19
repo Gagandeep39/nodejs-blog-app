@@ -12,6 +12,8 @@
   - [Event bus in this application](#event-bus-in-this-application)
   - [Moderation Service](#moderation-service)
   - [Handling Missing event](#handling-missing-event)
+  - [Deployment](#deployment)
+  - [NOTE](#note)
 
 ## Running locally
 1. Make sure you are in root of the project
@@ -120,4 +122,15 @@
 2. Push all events in events array
 3. Create an endpoint tha fetches all events that are stored in this bus
 4. Access the endpoint from query service and handle events
+
+## Deployment
+
+- Various COnsiderations are required to be made while deploying application
+  - Scaling, Inter ervice communications, dynamic ports and IPs
+- Using docker
+  - We don't need to assume the hardware the application will run on, instead will specify the hard manually i nocker
+  - No need to understand how application runs eg. `npm start`
   
+## NOTE
+- `docker run -it [img-id] sh` - Overides default command and **starts container**
+- `docker exec -it [img-id] sh` - Allows accessing a **running container**

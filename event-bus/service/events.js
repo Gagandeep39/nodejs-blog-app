@@ -10,9 +10,11 @@ const axios = require('axios');
 exports.publishEvents = (req, res) => {
   const event = req.body;
 
+  // Send events to all services
   axios.post('http://localhost:4000/events', event);
   axios.post('http://localhost:5000/events', event);
   axios.post('http://localhost:8000/events', event);
+  axios.post('http://localhost:9000/events', event);
 
   res.send({ status: 'OK' });
 };

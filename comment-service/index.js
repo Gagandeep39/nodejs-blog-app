@@ -7,6 +7,7 @@
  */
 const express = require('express');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
@@ -26,7 +27,21 @@ app.post('/posts/:id/comments', (req, res) => {
   const comments = commentsByPostId[req.params.id] || [];
   comments.push({ id: commentId, content });
   commentsByPostId[req.params.id] = comments;
-  res.status(201).send(comments);
+  // Send data to event bus
+  axios
+    .post('http://localhost:7000/events', {
+      type: 'CommentCreated',
+      data: {
+        id: commentId,
+        content,
+        postId: req.params.id,
+      },
+    })
+    .then(() => res.status(201).send(comments));
+});
+app.post('/events', (req, res) => {
+  console.log(req.body.type);
+  res.send({ status: 'OK' });
 });
 
 const PORT = process.env.PORT || 5000;

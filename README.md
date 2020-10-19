@@ -23,6 +23,7 @@
     - [Method 2 (Preferred)](#method-2-preferred)
   - [Services](#services)
     - [Ports](#ports)
+  - [Interservice Communication](#interservice-communication)
   - [NOTE](#note)
 
 ## Running locally
@@ -222,6 +223,14 @@
 - Flow 
   - nodePort (Accessed via browser) -> port(Port assigned to node-service) -> targetPort (Application)
   - Node pode reqests i redirected to service where service redirects to application
+
+## Interservice Communication
+
+- When a request is sent, an event is created and sent to event bus
+- In kubernetes we will do this using ClusterIP
+  1. A request will be made by posts-service to clisterIP service of event-bus
+  2. Event bus will recieve the request from ClusterIP service
+  3. Event bus will publish an event to all cluster IP services which will then be forwarded to associated microservices
   
 ## NOTE
 - `docker run -it [img-id] sh` - Overides default command and **starts container**

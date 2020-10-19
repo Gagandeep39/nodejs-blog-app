@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Set env
-        run: echo "::set-env name=NOW::v$(date +'%Y%m%d.%H%M%S')"
+        run: echo "NOW=v$(date +'%Y%m%d.%H%M%S')" >> $GITHUB_ENV
         # Required for Build and push step
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1

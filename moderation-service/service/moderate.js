@@ -13,9 +13,9 @@ exports.moderateComments = (req, res) => {
   switch (type) {
     case `CommentCreated`:
       const { id, postId, content } = data;
-      const status = data.content.inclues('orange') ? 'rejected' : 'approved';
+      const status = data.content.includes('orange') ? 'rejected' : 'approved';
       axios
-        .post('http://localhost:7000', {
+        .post('http://localhost:7000/events', {
           type: 'CommentModerated',
           data: {
             id,

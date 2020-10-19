@@ -37,7 +37,6 @@ jobs:
         with:
           context: posts-service
           file: posts-service/Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/386
           push: true
           tags: |
             gagandeep39/blog-posts-service:${{env.NOW}}

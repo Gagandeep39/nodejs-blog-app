@@ -2,6 +2,7 @@
 
 - [Social Media App](#social-media-app)
   - [Running locally](#running-locally)
+    - [Services and default post](#services-and-default-post)
   - [Microservices](#microservices)
     - [Posts Microservice](#posts-microservice)
     - [Comments Microservice](#comments-microservice)
@@ -15,6 +16,17 @@
 ## Running locally
 1. Make sure you are in root of the project
 2. Execute `npm run dev`
+
+### Services and default post
+
+| Service              | Port | Tasks                        |
+| -------------------- | ---- | ---------------------------- |
+| `comment-service`    | 5000 | Handle Comments              |
+| `posts-service`      | 4000 | Handle Posts                 |
+| `query-service`      | 8000 | Handles data presentation    |
+| `moderation-service` | 9000 | Moderate comments            |
+| `event-bus`          | 7000 | Publishes and handles events |
+| `react-client `      | 3000 | Client App                   |
 
 ## Microservices
 

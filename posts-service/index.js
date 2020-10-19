@@ -21,4 +21,4 @@ app.post('/posts', postsService.createPost);
 app.post('/events', postsService.sendEvent);
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Posts Service started on port ${PORT} - v2`));
+app.listen(PORT, () => console.log(`Posts Service started on port ${PORT} - v3`));

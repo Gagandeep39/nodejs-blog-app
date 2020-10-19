@@ -7,8 +7,9 @@
     - [Comments Microservice](#comments-microservice)
   - [Event Bus](#event-bus)
     - [Use case](#use-case)
-    - [Query service](#query-service)
-    - [Event bus in this application](#event-bus-in-this-application)
+  - [Query service](#query-service)
+  - [Event bus in this application](#event-bus-in-this-application)
+  - [Moderation Service](#moderation-service)
 
 ## Running locally
 1. Make sure you are in root of the project
@@ -62,7 +63,7 @@
   9. All fetch requests will be made to query service
 
 
-### Query service
+## Query service
 
 - Microservice consisting of event bus
 - Pros
@@ -72,8 +73,23 @@
   - Data duplication
   - Difficult ot understand
 
-### Event bus in this application
+## Event bus in this application
 
 1. Post, comment and queue microserice will have an endpoint `POST /events`
 2. To emit an event, every microservice will send a POST request to event bus
 2. When Event bus receieves an event from microservice, it will send a series of POST requests to each microservice at endpoint of step 1
+
+## Moderation Service
+
+- Used to moderate the comment
+- Rejects the comment if it contains `orange as substring`
+- Flow
+  1. Comment posted by client
+  2. Comment recieved at comment-service
+  3. Event sent to event-bus
+  4. Event published by event bus
+  5. Event recieved by moderation service
+  6. Comment moderated by service
+  7. Event `CommentModerated` published
+  8. Event recieved by comment-service, when will then be updated in database (Not query service because query-service is only for presenting data. All operation related to data manipulation must be managed by other services)
+  9. Event will be published which will then be handled by query service

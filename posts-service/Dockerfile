@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:14.14.0-alpine3.12
 LABEL mantainer="singh.gagandeep3911@gmail.com"
 WORKDIR /app
 COPY package.json .

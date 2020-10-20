@@ -9,6 +9,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
+require('dotenv').config()
 const eventsService = require('./service/events');
 
 app.use(bodyParser.json());

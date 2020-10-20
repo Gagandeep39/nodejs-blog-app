@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comment
+  # Actual pod description
+  template:
+    metadata:
+      labels:
+        app: comment
+    spec:
+      containers:
+        - name: comment
+          image: gagandeep39/blog-comment-service
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
+          env:
+            - name: EVENT_BUS_SERVICE
+              value: event-bus-serv
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comment-serv
+spec:
+  selector:
+    app: comment
+  ports:
+    - port: 5000
+      targetPort: 5000
+      name: comment-clusterip-port
+      protocol: TCP

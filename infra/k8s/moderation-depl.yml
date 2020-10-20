@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation
+  # Actual pod description
+  template:
+    metadata:
+      labels:
+        app: moderation
+    spec:
+      containers:
+        - name: moderation
+          image: gagandeep39/blog-moderation-service
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
+          env:
+            - name: EVENT_BUS_SERVICE
+              value: event-bus-serv
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-serv
+spec:
+  selector:
+    app: moderation
+  ports:
+    - port: 9000
+      targetPort: 9000
+      name: moderation-clusterip-port
+      protocol: TCP

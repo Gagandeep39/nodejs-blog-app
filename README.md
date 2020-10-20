@@ -35,6 +35,8 @@
   - [Ingress Controller paths](#ingress-controller-paths)
   - [Skaffold](#skaffold)
     - [Installation](#installation)
+  - [Conclusion](#conclusion)
+  - [Issues and solution](#issues-and-solution)
   - [NOTE](#note)
 
 ## Running locally
@@ -340,6 +342,22 @@ spec:
 
 - Site can be found at the [link](https://skaffold.dev/) 
 - Run `choco install -y skaffold`
+
+## Conclusion 
+
+- Figuring out efficient dta communication is a big challenge
+- Use async communication as much as possible
+- Async communication makes the application self sufficient
+- Docker deployment is awesme
+- K8s makes deploment + scaling a breeze
+
+## Issues and solution
+
+- Code duplication - Build a central npm module
+- Hard to picture flow of events - Define events in shared library
+- Hard to decide what properties an event should have - Use typescript
+- Hard to test event flows - Write more and more test cases
+- Kubernetes is resource heavy - Run on Cloud
 
 ## NOTE
 - `docker run -it [img-id] sh` - Overides default command and **starts container**

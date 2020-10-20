@@ -17,7 +17,7 @@ export default function Posts() {
 
   const fetchPosts = () => {
     axios
-      .get(`${host}:${postServicePort}/posts`)
+      .get(`http://${host}:${postServicePort}/posts`)
       .then((response) => {
         setPosts(response.data);
       })

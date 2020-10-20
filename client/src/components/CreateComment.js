@@ -16,7 +16,7 @@ export default function CreateComment({ postId }) {
   const onSubmit = (event) => {
     event.preventDefault();
     axios
-      .post(`${host}:${commentServicePort}/posts/${postId}/comments`, { content })
+      .post(`http://${host}:${commentServicePort}/posts/${postId}/comments`, { content })
       .then((response) => setContent(''))
       .catch((error) => console.log(error));
   };

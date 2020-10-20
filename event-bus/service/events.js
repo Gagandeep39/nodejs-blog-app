@@ -19,8 +19,8 @@ exports.publishEvents = (req, res) => {
   // Send events to all services
   axios.post(`http://${postsService}:4000/events`, event);
   axios.post(`http://${commentService}:5000/events`, event);
-  axios.post(`http://${moderationService}:8000/events`, event);
-  axios.post(`http://${queryService}:9000/events`, event);
+  axios.post(`http://${moderationService}:9000/events`, event);
+  axios.post(`http://${queryService}:8000/events`, event);
 
   res.send({ status: 'OK' });
 };

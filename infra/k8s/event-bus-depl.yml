@@ -18,7 +18,7 @@ spec:
           resources:
             limits:
               memory: '128Mi'
-              cpu: '500m'
+              cpu: '250m'
           env:
             - name: POSTS_SERVICE
               value: posts-clusterip-srv

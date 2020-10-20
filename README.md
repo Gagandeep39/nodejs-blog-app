@@ -24,6 +24,15 @@
   - [Services](#services)
     - [Ports](#ports)
   - [Interservice Communication](#interservice-communication)
+  - [Client application Pod](#client-application-pod)
+    - [Method 1](#method-1-1)
+    - [Method 2 (Preferred)](#method-2-preferred-1)
+  - [Load Balancer vs Ingress](#load-balancer-vs-ingress)
+    - [Load Balancer](#load-balancer)
+    - [Ingress](#ingress)
+  - [`ingress-nginx`](#ingress-nginx)
+    - [Steps to use](#steps-to-use)
+  - [Ingress Controller paths](#ingress-controller-paths)
   - [NOTE](#note)
 
 ## Running locally
@@ -49,10 +58,10 @@
 - Fetch All Posts
 - Routes
 
-| Path     | Method | Body              | Goal               |
-| -------- | ------ | ----------------- | ------------------ |
-| `/posts` | POST   | `{title: String}` | Create a new Post  |
-| `/posts` | GET    | `-`               | Retrieve All posts |
+| Path            | Method | Body              | Goal               |
+| --------------- | ------ | ----------------- | ------------------ |
+| `/posts/create` | POST   | `{title: String}` | Create a new Post  |
+| `/posts`        | GET    | `-`               | Retrieve All posts |
 
 
 ### Comments Microservice
@@ -237,7 +246,81 @@
   3. Run
   4. Make sure you create an extra nodeip service so you can test it
 
+## Client application Pod
 
+- It doesnt make any communication with other pods
+- It only servers Html to uer on request
+- When user interacts with the Html pages, that is when interaction ith pod takes place
+
+### Method 1
+
+- Create a nodeport service for every pod and provide the Ip for the same to the client
+  - Any change in port cn break the apppication
+  - Basically Confi file to use a AWS/Azure load balancer and redirect to our pods
+
+### Method 2 (Preferred)
+
+- Use a **Load Balancer**
+- Flow
+  1. Send request from client to a load balancer
+  2. Load balancer forwards request to Ingress
+  3. Ingress redirects request to associated pod (Pod's service actually)
+
+## Load Balancer vs Ingress
+
+### Load Balancer
+
+- Gets traffic to a single pod
+- Requires us to tell K8s to reach to a provider and provision a load balancer
+
+### Ingress
+
+- Pod with routing rules to distribute traffic to other services
+
+## `ingress-nginx`
+
+- Open source project
+- Creates a load balance service + Ingress
+- URL https://github.com/kubernetes/ingress-nginx/
+- Run the command to start `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.40.2/deploy/static/provider/cloud/deploy.yaml`
+
+### Steps to use
+
+1. Run `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.40.2/deploy/static/provider/cloud/deploy.yaml`
+2. Create ingress-srv.yml
+```yml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    # Make sure to redirect post.com to localhost at C:\Windows\System32\drivers\etc\hosts for testing
+    # Post service can now be accessed frm localhost/posts
+    - host: localhost # can be post.com, abc.org
+      http:
+        paths:
+          - path: /posts
+            backend:
+              serviceName: posts-clusterip-srv
+              servicePort: 4000
+          # Define paths to other services
+```
+3. `kubectl apply -f .`
+
+- From above steps the URL we need to use is localhost
+- Client has become independent of host (i.e all ports must be set to 80 through env)
+
+## Ingress Controller paths
+
+| Method | Path                  | Pod             |
+| ------ | --------------------- | --------------- |
+| POST   | `/posts`              | posts-service   |
+| POST   | `/posts/:id/comments` | comment-service |
+| GET    | `/posts `             | query-service   |
+| GET    | `/`                   | Client          |
 
 ## NOTE
 - `docker run -it [img-id] sh` - Overides default command and **starts container**

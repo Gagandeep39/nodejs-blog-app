@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  # Actual pod description
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: client
+          image: gagandeep39/blog-client
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-serv
+spec:
+  selector:
+    app: client
+  ports:
+    - port: 3000
+      targetPort: 80 # Nginx runs apps on 80
+      name: client-clusterip-port
+      protocol: TCP

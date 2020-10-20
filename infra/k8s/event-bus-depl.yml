@@ -22,6 +22,12 @@ spec:
           env:
             - name: POSTS_SERVICE
               value: posts-clusterip-srv
+            - name: COMMENT_SERVICE
+              value: comment-serv
+            - name: MODERATION_SERVICE
+              value: moderation-serv
+            - name: QUERY_SERVICE
+              value: query-serv
 
 ---
 apiVersion: v1

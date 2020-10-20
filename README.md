@@ -231,7 +231,14 @@
   1. A request will be made by posts-service to clisterIP service of event-bus
   2. Event bus will recieve the request from ClusterIP service
   3. Event bus will publish an event to all cluster IP services which will then be forwarded to associated microservices
-  
+- Steps
+  1. Create a Cluster IP serice
+  2. Chnage the localhost host with clusterip service name in request URL
+  3. Run
+  4. Make sure you create an extra nodeip service so you can test it
+
+
+
 ## NOTE
 - `docker run -it [img-id] sh` - Overides default command and **starts container**
 - `docker exec -it [img-id] sh` - Allows accessing a **running container**

@@ -33,6 +33,8 @@
   - [`ingress-nginx`](#ingress-nginx)
     - [Steps to use](#steps-to-use)
   - [Ingress Controller paths](#ingress-controller-paths)
+  - [Skaffold](#skaffold)
+    - [Installation](#installation)
   - [NOTE](#note)
 
 ## Running locally
@@ -321,6 +323,23 @@ spec:
 | POST   | `/posts/:id/comments` | comment-service |
 | GET    | `/posts `             | query-service   |
 | GET    | `/`                   | Client          |
+
+## Skaffold
+
+- Using `kubectl rollout restart deployment <depl-name>` everytime to update a container is not a good apprach
+- Skaffold automates above task in dev environment
+- Allows updating code for a pod
+- Allows creation/deletion easily
+- Runs outside the cluster
+- Start scaffold's yml file starts the cluter and stopng it stops the cluster
+- Started using `skaffold start`
+- Supports live reload
+- **NOTE** Refer the `skaffold.yml` in root of directory
+
+### Installation
+
+- Site can be found at the [link](https://skaffold.dev/) 
+- Run `choco install -y skaffold`
 
 ## NOTE
 - `docker run -it [img-id] sh` - Overides default command and **starts container**

@@ -4,6 +4,9 @@ WORKDIR /app
 COPY package.json .
 RUN npm install
 COPY . .
+ENV REACT_APP_POST_SERVICE=80
+ENV REACT_APP_COMMENT_SERVICE=80
+ENV REACT_APP_QUERY_SERVICE=80
 RUN npm run build
 
 # Stage 2

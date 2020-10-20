@@ -18,7 +18,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 app.get('/posts', postsService.fetchAllPosts);
-app.post('/posts', postsService.createPost);
+app.post('/posts/create', postsService.createPost);
 app.post('/events', postsService.sendEvent);
 
 const PORT = process.env.PORT || 4000;

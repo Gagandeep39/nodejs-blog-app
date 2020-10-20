@@ -16,7 +16,7 @@ export default function CreatePost() {
   const onSubmit = (event) => {
     event.preventDefault();
     axios
-      .post(`http://${host}:${postServicePort}/posts`, { title })
+      .post(`http://${host}:${postServicePort}/posts/create`, { title })
       .then((response) => {
         console.log(response);
         setTitle('');

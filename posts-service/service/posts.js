@@ -8,6 +8,7 @@
 const axios = require('axios');
 const { randomBytes } = require('crypto');
 const posts = {};
+const eventBusService = process.env.EVENT_BUS_SERVICE;
 
 exports.fetchAllPosts = (req, res) => res.send(posts);
 
@@ -20,7 +21,7 @@ exports.createPost = (req, res) => {
   };
   // Send data to event bus
   axios
-    .post('http://localhost:7000/events', {
+    .post(`http://${eventBusService}:7000/events`, {
       type: 'PostCreated',
       data: {
         id,

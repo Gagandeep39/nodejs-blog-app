@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
+require('dotenv').config()
 const postsService = require('./service/posts');
 
 app.use(bodyParser.json());

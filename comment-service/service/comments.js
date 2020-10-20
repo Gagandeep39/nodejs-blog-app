@@ -8,6 +8,7 @@
 const axios = require('axios');
 const { randomBytes } = require('crypto');
 const commentsByPostId = {};
+const eventBusService = process.env.EVENT_BUS_SERVICE;
 
 exports.fetchCommentsByPostId = (req, res) => {
   res.send(commentsByPostId[req.params.id]);
@@ -21,7 +22,7 @@ exports.createComment = (req, res) => {
   commentsByPostId[req.params.id] = comments;
   // Send data to event bus
   axios
-    .post('http://localhost:7000/events', {
+    .post(`http://${eventBusService}:7000/events`, {
       type: 'CommentCreated',
       data: {
         id: commentId,
@@ -42,7 +43,7 @@ exports.sendEvent = (req, res) => {
       const comment = comments.find((c) => c.id === id);
       comment.status = status;
       axios
-        .post('http://localhost:7000/events', {
+        .post(`http://${eventBusService}:7000/events`, {
           type: 'CommentUpdated',
           data: {
             id,

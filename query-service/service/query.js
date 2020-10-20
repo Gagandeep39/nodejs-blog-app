@@ -7,6 +7,7 @@
  */
 const axios = require('axios');
 const posts = {};
+const eventBusService = process.env.EVENT_BUS_SERVICE;
 
 /**
  *
@@ -50,7 +51,7 @@ const handleEvent = (type, data) => {
 exports.processPreviousEvents = () => {
   console.log('Processing previous events');
   axios
-    .get('http://localhost:7000/events')
+    .get(`http://${eventBusService}:7000/events`)
     .then((response) => {
       response.data.forEach((event) => {
         console.log(event.type);

@@ -7,6 +7,7 @@
  */
 
 const axios = require('axios');
+const eventBusService = process.env.EVENT_BUS_SERVICE;
 
 exports.moderateComments = (req, res) => {
   const { type, data } = req.body;
@@ -15,7 +16,7 @@ exports.moderateComments = (req, res) => {
       const { id, postId, content } = data;
       const status = data.content.includes('orange') ? 'rejected' : 'approved';
       axios
-        .post('http://localhost:7000/events', {
+        .post(`http://${eventBusService}:7000/events`, {
           type: 'CommentModerated',
           data: {
             id,

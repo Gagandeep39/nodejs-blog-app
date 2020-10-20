@@ -9,6 +9,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+require('dotenv').config()
 const commentsService = require('./service/comments');
 const app = express();
 

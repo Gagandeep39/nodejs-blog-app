@@ -20,6 +20,9 @@ spec:
             limits:
               memory: '128Mi'
               cpu: '500m'
+          env:
+            - name: EVENT_BUS_SERVICE
+              value: event-bus-serv
 
 ---
 apiVersion: v1
